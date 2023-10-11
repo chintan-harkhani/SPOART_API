@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Soccer &mdash; Website by Colorlib</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+  <link rel="stylesheet" href="css/bootstrap/bootstrap.css">
+  <link rel="stylesheet" href="css/jquery-ui.css">
+  <link rel="stylesheet" href="css/owl.carousel.min.css">
+  <link rel="stylesheet" href="css/owl.theme.default.min.css">
+  <link rel="stylesheet" href="css/owl.theme.default.min.css">
+
+  <link rel="stylesheet" href="css/jquery.fancybox.min.css">
+
+  <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+
+  <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
+
+  <link rel="stylesheet" href="css/aos.css">
+
+  <link rel="stylesheet" href="css/style.css">
+
+
+
+</head>
+
+<body>
+
+  <div class="site-wrap">
+
+    <div class="site-mobile-menu site-navbar-target">
+      <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close">
+          <span class="icon-close2 js-menu-toggle"></span>
+        </div>
+      </div>
+      <div class="site-mobile-menu-body"></div>
+    </div>
+
+
+    <header class="site-navbar py-4" role="banner">
+
+      <div class="container">
+        <div class="d-flex align-items-center">
+          <div class="site-logo">
+            <a href="index.html">
+              <img src="images/logo.png" alt="Logo">
+            </a>
+          </div>
+          <div class="ml-auto">
+            <nav class="site-navigation position-relative text-right" role="navigation">
+              <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
+                <li><a href="dasboard.html" class="nav-link"  style="color: #fff;">Home</a></li>
+                <li class="active"><a href="matches.html" class="nav-link" style="color: #fff;">Matches</a></li>
+                <li><a  href="#" class="nav-link"  style="color: #fff;">Logout</a></li>
+              </ul>
+            </nav>
+
+            <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right text-white"><span
+                class="icon-menu h3 text-white"></span></a>
+          </div>
+        </div>
+      </div>
+
+    </header>
+
+     <div id="match">
+     
+     </div>
+  
+
+    
+
+  <!-- .site-wrap -->
+
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="js/jquery-ui.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/jquery.stellar.min.js"></script>
+  <script src="js/jquery.countdown.min.js"></script>
+  <script src="js/bootstrap-datepicker.min.js"></script>
+  <script src="js/jquery.easing.1.3.js"></script>
+  <script src="js/aos.js"></script>
+  <script src="js/jquery.fancybox.min.js"></script>
+  <script src="js/jquery.sticky.js"></script>
+  <script src="js/jquery.mb.YTPlayer.min.js"></script>
+
+
+  <script src="js/main.js"></script>
+  <script>
+    const apiUrl = 'http://localhost:8000/v1/tournament/tournamentlist';
+    
+
+    fetch(apiUrl)
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        localStorage.setItem("data", JSON.stringify(data.data));
+        console.log(data.data);
+        banner();
+      }).catch((error)=>{
+        console.log(error);
+      })
+
+      function banner(){
+        const data = JSON.parse(localStorage.getItem("data"));
+        let tbl ="";
+        data.map((val)=>{
+             tbl+=`
+            <div class="hero overlay" style="background-image: url('https://img.freepik.com/premium-photo/international-sports-day-6-april_10221-18936.jpg');">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-lg-5 mx-auto text-center">
+              <h1 class="text-white">${ val.category.game_name} ${val.tournament_name} </h1>
+              <p>This is a ${val.category.game_type} Game</p>
+              <p style="font-size : 20px;">🗡️ ${val.match.match_name}🗡️ </p>
+              <p style="font-size : 20px; color: #fff"> Start Date :- ${val.startdate} And End Date :- ${val.enddate} </p>
+              </div>
+          </div>
+        </div>
+      </div>
+      </div>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="d-flex team-vs">
+              <span class="score">4-1</span>
+              <div class="team-1 w-50">
+                <div class="team-details w-100 text-center">
+                  <img src="images/logo_1.png" alt="Image" class="img-fluid">
+                  <h3>${val.team1.team_name}</h3>
+                  <ul class="list-unstyled">
+                    <li>Player :- ${val.team1.total_player}</li>
+                    <li>Stadium :- ${val.team1.stadium_name}</li>
+                    <li>Location :- ${val.team1.location}</li>
+                    <li>Year :- ${val.team1.founded_year}</li>
+                    <li> team Source :- ${val.match.source}</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="team-2 w-50">
+                <div class="team-details w-100 text-center">
+                  <img src="images/logo_2.png" alt="Image" class="img-fluid">
+                  <h3>${val.team2.team_name}</h3>
+                  <ul class="list-unstyled">
+                    <li>Player :- ${val.team2.total_player}</li>
+                    <li>Stadium :- ${val.team2.stadium_name}</li>
+                    <li>Location :- ${val.team2.location}</li>
+                    <li>Year :- ${val.team2.founded_year}</li>
+                    <li> team Source :- ${val.match.source}</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+             `
+        })
+        document.getElementById("match").innerHTML =tbl;
+      }
+  </script>
+</body>
+
+</html>
